@@ -7,16 +7,15 @@ import SelectField from '@/components/forms/SelectField'
 import { Button } from '@/components/ui/button'
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/constans'
 import React, { useState } from 'react'
-import { SubmitHandler, useForm,  } from 'react-hook-form'
+import { useForm,  } from 'react-hook-form'
 
 const SignUpPage = () => {
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, ] = useState(false)
   const {
     register,
     handleSubmit,
     control,
-    watch,
     formState: {errors},
   } = useForm<SignUpFormData>({
     defaultValues: {
