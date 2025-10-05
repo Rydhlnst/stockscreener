@@ -14,21 +14,21 @@ import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { LogOut } from 'lucide-react';
 import NavItems from './NavItems';
+import { signOut } from '@/lib/actions/auth.action';
 
-const UserDropdown = () => {
+const UserDropdown = ({user}: {user: User}) => {
 
     const router = useRouter();
 
     const handleSignOut = async () => {
+        await signOut()
         router.push("/sign-in");
     }
 
-    const user = {name: "John", email: "rydhlnst@gmail.com"}
-
   return (
     <DropdownMenu>
-        <DropdownMenuTrigger>
-            <Button variant={"ghost"} className='flex items-center gap-3 text-gray-400 hover:text-yellow-500'>
+        <DropdownMenuTrigger asChild>
+            <Button variant={"ghost"} className='flex items-center gap-3 hover:bg-white/10 !py-4.5 text-gray-400 hover:text-yellow-500'>
                 <Avatar className='h-8 w-8'>
                     <AvatarImage src={"https://github.com/shadcn.png"}/>
                     <AvatarFallback className='bg-yellow-500 text-yellow-900 text-sm font-bold'>
@@ -42,7 +42,7 @@ const UserDropdown = () => {
                 </div>  
             </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className='bg-gray-800 border-none border-gray-800/50'>
             <DropdownMenuLabel>
                 <div className='flex relative items-center gap-3 py-2'>
                     <Avatar className='h-10 w-10'>
