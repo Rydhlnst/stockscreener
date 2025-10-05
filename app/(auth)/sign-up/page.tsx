@@ -5,11 +5,16 @@ import FooterLink from '@/components/forms/FooterLink'
 import InputField from '@/components/forms/InputField'
 import SelectField from '@/components/forms/SelectField'
 import { Button } from '@/components/ui/button'
+import { signUpWithEmail } from '@/lib/actions/auth.action'
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/constans'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm,  } from 'react-hook-form'
+import { toast } from 'sonner'
 
 const SignUpPage = () => {
+
+  const router = useRouter()
 
   const [isSubmitting, ] = useState(false)
   const {
@@ -32,11 +37,25 @@ const SignUpPage = () => {
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
-      console.log(data)
+      console.log("Submitting data:", data);
+      const result = await signUpWithEmail(data);
+      console.log("Result:", result);
+
+      if (result?.success) {
+        console.log("Redirecting...");
+        router.push("/");
+      } else {
+        console.log("Sign up failed or no success flag");
+      }
     } catch (error) {
-      console.error(error)
+      console.error("Error during signup:", error);
+      toast.error("Sign Up Failed", {
+        description:
+          error instanceof Error ? error.message : JSON.stringify(error),
+      });
     }
-  }
+  };
+
   return (
     <div>
       <h1 className='form-tile'>Sign Up & Personalize</h1>
@@ -109,8 +128,12 @@ const SignUpPage = () => {
           required
         />
 
-        <Button type='submit' disabled={isSubmitting} className='yellow-btn w-full mt-5'>
-          {isSubmitting ? "Creating Account" : "Start Your Investing Journey"}
+       <Button 
+          type='submit' 
+          disabled={isSubmitting} 
+          className='yellow-btn w-full mt-5'
+        >
+          {isSubmitting ? "Creating Account..." : "Start Your Investing Journey"}
         </Button>
 
         <FooterLink text='Already have an account' linkText='Sign in' href='/sign-in'/>

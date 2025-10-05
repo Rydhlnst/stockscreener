@@ -102,9 +102,9 @@ const CountrySelect = ({
                                         )}
                                     />
                                     <span className='flex items-center gap-2'>
-                                        <span>{getFlagEmoji(country.value)}</span>
-                                        <span>{country.label}</span>
-                                    </span>
+                    <span>{getFlagEmoji(country.value)}</span>
+                    <span>{country.label}</span>
+                  </span>
                                 </CommandItem>
                             ))}
                         </CommandGroup>
